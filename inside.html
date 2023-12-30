@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Additional script for confetti -->
+    <div id="confetti"></div>
+    <!--  -->
+    <title>A little surprise</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="jquery.fireworks.js"></script>
+    <script type="text/javascript" src="jquery.confetti.js"></script>
+
+    <style>
+        /* Animation for the personalized greeting */
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animated-word {
+            display: inline-block;
+            opacity: 0;
+            animation: popIn 0.5s ease;
+            animation-fill-mode: forwards;
+            margin-right: 14px; /* Adjust the spacing between words */
+        }
+
+        .animated-word.username {
+            display: inline-block;
+            animation: slideIn 1s ease;
+            animation-fill-mode: forwards;
+
+        }
+
+        #greeting-container h3 {
+            white-space: nowrap;
+            margin: 0; /* Remove default margin */
+        }
+
+        /* Additional messages styling */
+        #additional-messages {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        /* Emoji styling */
+        .emoji {
+            display: inline-block;
+            font-size: 24px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="greeting-container"></div>
+
+    <script>
+        // Function to get the username from the query parameter
+        function getUserNameFromQuery() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('username');
+        }
+    
+        // Function to get a random message from the provided array
+        function getRandomMessage(messages) {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            return messages[randomIndex];
+        }
+    
+        // Function to display the personalized greeting with animation and additional messages
+        function displayGreeting() {
+            const username = getUserNameFromQuery();
+    
+            if (username) {
+                const greetingContainer = document.getElementById('greeting-container');
+                const greetingElement = document.createElement('h3');
+    
+                // Split the entire text into words
+                const words = ["Happy", "New", "Year,", username, "!"];
+    
+                // Display each word with a popping animation
+                words.forEach((word, index) => {
+                    const wordElement = document.createElement('span');
+                    wordElement.textContent = word;
+                    wordElement.classList.add('animated-word');
+                    if (index === words.length - 2) {
+                        wordElement.classList.add('username');
+                    }
+                    wordElement.style.animationDelay = `${index * 0.5}s`;
+                    greetingElement.appendChild(wordElement);
+                });
+    
+                greetingContainer.appendChild(greetingElement);
+    
+                // Additional messages array
+                const additionalMessages = [
+                    "Wishing you and your loved ones a year filled with health, wealth, and joy😊.",
+                    "May the coming year be a blank canvas for you to paint a beautiful picture of success and happiness😉.",
+                    "May this new year be a time of growth, discovery, and fulfillment of your dreams🫡.",
+                    "Cheers to a year filled with exciting challenges, new opportunities, and memorable🥂.",
+                    "May the spirit of the season fill your heart with peace, joy, and gratitude🕊️.",
+                    "Likayi ang tanang makapasakit sa imo para di ka magmahay🫵.",
+                    "Aysig tinamad🫵😐, makagaba na."
+                ];
+    
+                // Get a random additional message
+                const randomMessage = getRandomMessage(additionalMessages);
+    
+                // Display the additional message
+                const additionalMessageElement = document.createElement('p');
+                additionalMessageElement.textContent = randomMessage;
+                greetingContainer.appendChild(additionalMessageElement);
+            }
+        }
+    
+        // Wait for the DOM to fully load before executing the script
+        document.addEventListener('DOMContentLoaded', function () {
+            displayGreeting();
+        });
+    
+        $('body').fireworks({
+            sound: false,
+            opacity: 0.8,
+            width: '100%',
+            height: '100%'
+        });
+    </script>
+    
+</body>
+</html>

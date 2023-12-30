@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome unknown person</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+            color: white;
+            overflow: hidden; /* Hide overflow to prevent scrollbar */
+            position: relative;
+        }
+
+        #input-container {
+            text-align: center;
+        }
+
+        .large-input {
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .large-button {
+            padding: 15px 25px;
+            font-size: 18px;
+            background-color: #00ff00; /* Button color */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ff00; /* Glow effect */
+        }
+
+        .large-button:hover {
+            box-shadow: 0 0 20px #00ff00; /* Enhanced glow on hover */
+        }
+
+        /* Animation for the background text */
+        @keyframes glowAnimation {
+            0%, 100% { opacity: 0; text-shadow: 0 0 10px #00ff00; }
+            45%, 55% { opacity: 1; text-shadow: 0 0 20px #00ff00; }
+        }
+
+        .animated-text {
+            position: absolute;
+            font-size: 24px;
+            animation: glowAnimation 5s infinite; /* Adjust the duration as needed */
+            left: 50%; /* Initially centered horizontally */
+            top: 10%; /* Initially positioned above the input container */
+            transform: translateX(-50%); /* Center horizontally */
+        }
+    </style>
+</head>
+<body>
+    <div id="input-container">
+        <input type="text" id="userName" name="userName" placeholder="Your Name" class="large-input">
+        <br>
+        <button onclick="proceedToGreeting()" class="large-button">Proceed</button>
+    </div>
+
+    <!-- Animated background text -->
+    <div id="animatedText" class="animated-text">Please put your name and click proceed</div>
+
+    <script>
+        function proceedToGreeting() {
+            var userName = document.getElementById('userName').value;
+
+            // Check if the userName is not empty
+            if (userName.trim() !== "") {
+                // Redirect to index.html with the username as a query parameter
+                window.location.href = 'inside.html?username=' + encodeURIComponent(userName);
+            } else {
+                alert("Please enter your name before proceeding.");
+            }
+        }
+
+        // JavaScript for random movement
+        const animatedText = document.getElementById('animatedText');
+        const inputContainer = document.getElementById('input-container');
+
+        function moveRandomly() {
+            const bufferZone = 50; // Adjust the buffer zone as needed
+            const maxX = window.innerWidth - animatedText.clientWidth;
+            const maxY = window.innerHeight - animatedText.clientHeight;
+
+            let randomX, randomY;
+
+            do {
+                randomX = Math.random() * maxX;
+                randomY = Math.random() * maxY;
+            } while (
+                // Check proximity to input and button
+                randomX > inputContainer.offsetLeft - animatedText.clientWidth - bufferZone &&
+                randomX < inputContainer.offsetLeft + inputContainer.offsetWidth + bufferZone &&
+                randomY > inputContainer.offsetTop - animatedText.clientHeight - bufferZone &&
+                randomY < inputContainer.offsetTop + inputContainer.offsetHeight + bufferZone
+            );
+
+            animatedText.style.left = randomX + 'px';
+            animatedText.style.top = randomY + 'px';
+        }
+
+        // Move the text randomly after fade-out and randomize position during fade-in
+        animatedText.addEventListener('animationiteration', function () {
+            moveRandomly();
+            changeText();
+        });
+
+        // Function to change the text randomly
+        function changeText() {
+            const texts = ["Whats on the other side?", "Do you wanna know?"];
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            animatedText.textContent = randomText;
+        }
+    </script>
+</body>
+</html>

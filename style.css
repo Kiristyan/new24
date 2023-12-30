@@ -1,0 +1,55 @@
+/* Style for the confetti */
+#confetti {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    opacity: 0.9; /* Set the opacity value as needed (0.0 to 1.0) */
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+body {
+    background-color: black;
+}
+
+/* Style for the personalized greeting */
+#greeting-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin-top: 20px;
+    z-index: 1; /* Ensure it's above other elements */
+}
+
+#greeting-container h3 {
+    color: #fff;
+    text-shadow: 0 0 10px #efd407; /* Green shadow */
+    font-size: 67px;
+    z-index: 1; /* Ensure it's above other elements */
+}
+
+/* Additional message style */
+#greeting-container p {
+    color: #fff;
+    font-size: 35px;
+    margin-top: 20px;
+    text-shadow: 0 0 10px #efd407; /* Green shadow */
+    z-index: 1; /* Ensure it's above other elements */
+
+
+}
+
